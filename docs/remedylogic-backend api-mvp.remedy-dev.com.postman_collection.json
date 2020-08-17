@@ -1,0 +1,1007 @@
+{
+	"info": {
+		"_postman_id": "bfffc198-9c2c-45f7-ae9a-3ef1447e8f5b",
+		"name": "remedylogic-backend api-mvp.remedy-dev.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://api-mvp.remedy-dev.com/v1/auth/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"apos7@remedy-dev.com\",\n\t\"password\":\"asdfASDF!1\"\n}"
+				},
+				"url": {
+					"raw": "https://api-mvp.remedy-dev.com/v1/auth/register",
+					"protocol": "https",
+					"host": [
+						"api-mvp",
+						"remedy-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://api-mvp.remedy-dev.com/v1/auth/confirmregistration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"apos6@remedy-dev.com\",\n\t\"code\": \"190175\"\n}"
+				},
+				"url": {
+					"raw": "https://api-mvp.remedy-dev.com/v1/auth/confirmregistration",
+					"protocol": "https",
+					"host": [
+						"api-mvp",
+						"remedy-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"confirmregistration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://api-mvp.remedy-dev.com/v1/auth/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"apos6@remedy-dev.com\",\n\t\"password\":\"asdfASDF!1\"\n}"
+				},
+				"url": {
+					"raw": "https://api-mvp.remedy-dev.com/v1/auth/login",
+					"protocol": "https",
+					"host": [
+						"api-mvp",
+						"remedy-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://localhost:4000/v1/auth/register",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"apos4@cadabra.studio\",\n\t\"password\":\"asdfASDF!1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "user_sid=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "authtoken=eyJraWQiOiJKT0lYNmlFcTUwWjZtQXR0b2Z1bm5DeHNGa0JnaVBFZ3B2V1NKYnFJdW44PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhNzhkYWI5OC0xYThlLTQwN2EtOWQ2MC0yMzAwMGY1NjFkNDMiLCJldmVudF9pZCI6IjQ1NjAxNDQ2LWMxZWYtNDk1ZC05ZTRjLWE5MzcwYTFmMWVkZCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE1OTcwNDg0NDgsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTIuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0yX21nTVo5SDdrTSIsImV4cCI6MTU5NzA1MjA0OCwiaWF0IjoxNTk3MDQ4NDQ4LCJqdGkiOiJmMzcwZjUyNC0xMjIwLTQ0YWQtYWJhZC0yOWUzNzQ4ODBjOTQiLCJjbGllbnRfaWQiOiI2bWtrMG9ta3Z1bmN2djlmdXYwYmR0M2UwdCIsInVzZXJuYW1lIjoiYTc4ZGFiOTgtMWE4ZS00MDdhLTlkNjAtMjMwMDBmNTYxZDQzIn0.RJql3JaXaGiHP0-7WIbktCQwnjATCB8j8Qgl0Ez2qb1c-aHy8My-_5pIpmbG3-sv3SssmlhrNhXbolx2J5lOzE-ocCcm0CIy9sjFCFj8pNn4nvJZvcIdA8osu_W8TG_Ewv7dJ7NOxmvgjxeAAmPnGpAkydwuXjqQSVFEl58GOzHH46Td8YEuTiKIxjBBE86VZM8UjisADpbN9E0Mbq396NjU64n4rtKHq_4TLI0RWnpqGHyVcgJp-SzMvndPhoqyGPnbmsOXJOUnk_cpbFRsl5m01Ygh2Qd7shvGZDOMfLC3Dus7StB9kzK153QgmIDBMi0OrwTOk_uwhjLgxT69Ng; Max-Age=86; Path=/; Expires=Mon, 10 Aug 2020 08:35:34 GMT; HttpOnly"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1797"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"705-mXRTohMCCJqoQEzX1CDqTR+W8pk\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 10 Aug 2020 08:34:08 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.n_QuxSRkArpui2Mjn5HUc3DIJBsnSrMMz1UUxxyFBTRX3r45H5wxOkiiYxXBdmxBsuw-TnxSvtcBzWUf-NqTVm8rHxnryVxgBgte4MlSxKfoJXcnTQyD19fuZXfL87wqUTHb_xIE9Kn0G6KqAasMSAWe_xxFA3GBD-4J8_1k2pNsOZrMo3wTrdFPSMUgBvZVvM796Dj9164EFFBaBWUFcPDW6KBb0vb0SFlPKgm9YNIegJJf43hhQVbL0mhHU2qhBUzPRm4G2tzph7U6mPDHJhjMLOTxClAzFP9-FYBI8bgwuV9EKGmGn7AS2cPaHhlMj1VQ5UxfBm-SBLEYnP68Vg.A0N4tb4ma1_7Jzk2.gk2aChTJO1z1SgJ1uHBju60-uH1WuuJcb6eWHdnAq3ZcqEbjGArC3bjHyGxGYL4jlpGf1f8jyA91kKskapIfdxXaEdk5mGTFVZ8YsQ_Fi-akUbVJ_J2R3pWlKwOfUNbKW7dkMs72sNYlWQ0wYR4Jyt2-JQzknFy4Jo7mtRnkEsl2GwNTSzbHjOim8PoCYzVJkpzOOx98L3VTXBM9_SmtLLGLos0_z3POmFU_jYLdgmGi7-IvSqjHUnI1YaLABoMQuyvxk6vRecTaFpZm5LZE9nTw96WLssITeDmt0t03OOrzT63oeG2qgixu9B5SdErtgELeH6uCG6apVYdqQZaBa3-LLofLW6jeBSfsg6gYFkUQ6sg9Y7YV9UfUWhUM539MuFynezl4E-dUdgA7XgUmAk6qvk9VpVIPX53uyFoNg6-rwwHPil__1RI79vT7QqaKFJ-sZq3KLvLanrMsPuM_FkMRrLoQYKdc3DtK3rW0qm-2v4-MCAYqUcbN_ZxRtJIhQ47ZVAfh0mvBoH_rza-ltRAw0rhxV6v-zqVcKgbFjibYZ1yJZvJ-IdJwwIXjRWLHXtICwopubOKIIZoTbTTr6nm9LPvNYhW-wGXSrcB6w4nVavnuZwadeWzbdeaGyKXxVZ8qn443fkWPT3g840cEkz2Ulp_MrNDTjDfiETbkYyCqnNryyBmXt-omHdLEqpmRK6hVEcXW8aXbRgrNK0y6PTMtEO-N4KrQlpVAARn7j-CTq_7mmeEkVjpY7YIPAkwBodUDtM9WWfJXFwlzGW16zBB84NVMcJc5Qu9vnmqGN5FdHJ5HxuYhcmkYyzqJbwXEF89ZOjKWD5RcxI7X_D_lzmL5Jrv9S2ciY4opRuKVx5kJKb79Xa2UtDmUlUdVv7KkANDwRfiq3lqNPnKHLF0zIXbR8uaHY854Vj2nSjD7MvT1dNixBybXjfUCXssUm65TbzyjBjCoRgjhPxjiifPjTRGJe8ezSzBsVySE0Y02WO0ew6oq4Wfp6e0lHzN2LhuzidzTnMhJLbPmFZYGJfBnTvluixlKEeBBXnDYU1Fl2dSRzjnT6X0AixTD1tpEg1Dia6mq8KGYlskF_t5C9o1fQ7LjLj-H3bYUYi0MSsMey3MNgt69xMP6I029GvVTVzIeTINiY6dONKMqMtW0h43FEMUsM4qIGBXDwYlZp5yDVVjPfta_03c_lJsqxK_SCuSzAfbLK5l4JxTqtDDRiSy3yYsal8UpLm8IgnVo2H4x2RIt9QK3SNKEOvNM0pslyk8xIk5yNqumQOzj-_A22abya0ubbGUZPMMY_UMfoxd-Td3E02sMqd4RpI5zmgw.7cNXGkyeM51bTw2TuFCqpQ\"\n}"
+				}
+			]
+		},
+		{
+			"name": "https://api-mvp.remedy-dev.com/v1/auth/refresh",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"apos2@cadabra.studio\",\n\t\"refreshToken\": \"eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.ADbKSPf3_PSHIUpXC8U27Iw9lvRrFl4huCIfUBc4_efup7ksKG8DF40KY1kGJCXiA9QOI4Sjo9yuj1doPP6NeD-xJRCDYV81PDdUo78_YM_NOOsNvA85d7-Usnh4GYoYEs-QVmzQWNMKJMYgB78-zm9zM5r6Zw1WH9oslq-Dj6C3nqxoSG22YvgJnUWJiZFOWGxWsWI4mwaWZvCW0IpJ5mgUJwG5SJed9kwuKkhMLWAobqoXynia4HL177azwqtD3PcHAQ9Q50v-o3OISEmEk31_M3Eera-xuLik28rEevlGCXi7pNELvSZvQWYjuR8joC3WbRXt1OX_9hc4YbMZhA.L99M3nyV5Z84ACO0.5AdAG2zjMR5hbqsSczFhOkczKxMQ8818iROkgj9r0tV2yKkH-4NFnXktkpEAhY3dqz8ykPF77rhnMrxNI55rfnv8vTrEugR-YWgdxGUGuCsrHkv4-xLmxAQZctt425mfKohlR2GNMzWA1I2sqf8uwIeUDfo021B4GkmoAf9sCkV_GjkV0hG5sKhG7Q32DgAbqca-97dD6dOlKYaAdyGGyW8U1XXJf59lTUnglxlz_5tnERSpQPN3BZ6GG701eWvmRQgfVz-MqKfBXgeRwanFLgNEtYkO5rRgBwPMnsHrAo91CdH-YASNsp4_LPFaBMaqqW7HzOaEp_dwH1rfJecIMyTo5M-zzHKRDmqL6Wi1lIQEQnXEOTMjAy1lqG4ZOKpSevVmK0hemnXcWw3EG98OhNu1zjMRd5aYifAY4XolCT71psmvqbdvDAimooC9VMP90kRA4Oxdwaxc0OzsDdJE5uMS0yeBC22lqwFKeHenm7o3EzJ8NYiK7ImcMI-X8Q5pQdqjA88uqamkvlfmaSa_AtSg0FgyetqaSI4orMqNyYMRNDBmQxUCVUgtZbeRoDtVAr5ml4o5WXxZcU7IeywNiOImR5T3dezsxtmRI2GORm2q9DqD7xyWNnflrlYMVFJLm5otKfA-Muhxg_g_l1wMMiwm2Dp-4711ToHip1G__kJurWtG3l3w1KWfM3xuVdr6Co9by5HTbcTY3o7ZZjIKYtwyHfkxVMksqw-63B952mVQ_QxOUna9lHcqrjWTCLwUt2KMepGCYJMza66pTria0Vp_4_JrPnJtjGdYgafGZ0asTEsmvlyoqMQ8Y_RKHOosjA9WZ1VCZIcvII-uuCgXYYHhBVi2My1OlAalM99o2wEBPTWj_F17u4Fc8ggw-zJLmBW_ceF74N-gffIgedhFX0SfloWhyULS9ZG9rNXi5RsOKAHGU6QYZYLJa6tejMZNxqLPlfJckIkfPvGxRjY-UlRtQQzHN_IFt-vYk-yEEld15SnrVNEIEkfZ5964THSIpDwjaTPZIxF09REIjTzNSd4W9GF0RjGikijpjwHJfQH-t079PrZvzLcpwl5744hWJrMiBj47LCZjpbU-macfHY5Yx_ok5xbdIh9AKmg8jWUdwnDDc27plG4XAsk6EAtgKd91LWpaaW1LDSp6T9bQv9dpwsUpDXFfN7Nl37xG7msAENO1oKluQ-KSYQ8Omor_bJEIbOfhXQp_BwD8nd1n8MvcluaXTIZLAvixNqEpdm-1FCtBssNE52Qkd4NN9qXJqSLw6YknJievREZ_Dxy-35ngZlCGfMAwi06zOzn31BdAJ4ju6paZHESU0As.o7FZHezo5X-ib47uMdNa4w\"\n}"
+				},
+				"url": {
+					"raw": "https://api-mvp.remedy-dev.com/v1/auth/refresh",
+					"protocol": "https",
+					"host": [
+						"api-mvp",
+						"remedy-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://api-mvp.remedy-dev.com/v1/auth/changepassword",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"apos@cadabra.studio\",\n\t\"oldPassword\": \"asdfASDF!2\",\n\t\"newPassword\": \"asdfASDF!3\"\n}"
+				},
+				"url": {
+					"raw": "https://api-mvp.remedy-dev.com/v1/auth/changepassword",
+					"protocol": "https",
+					"host": [
+						"api-mvp",
+						"remedy-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"changepassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://api-mvp.remedy-dev.com/v1/auth/forgotpassword",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"apos3@cadabra.studio\"\n}"
+				},
+				"url": {
+					"raw": "https://api-mvp.remedy-dev.com/v1/auth/forgotpassword",
+					"protocol": "https",
+					"host": [
+						"api-mvp",
+						"remedy-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"forgotpassword"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://localhost:4000/v1/auth/forgotpassword",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"apos3@cadabra.studio\",\n\t\"newPassword\": \"asdfASDF!3\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/v1/auth/forgotpassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"v1",
+								"auth",
+								"forgotpassword"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "user_sid=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 10 Aug 2020 12:26:56 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "OK"
+				}
+			]
+		},
+		{
+			"name": "https://api-mvp.remedy-dev.com/v1/auth/forgotpassword submit code",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"apos3@cadabra.studio\",\n\t\"newPassword\": \"sdf23\",\n\t\"code\": \"code123\"\n}"
+				},
+				"url": {
+					"raw": "https://api-mvp.remedy-dev.com/v1/auth/forgotpassword",
+					"protocol": "https",
+					"host": [
+						"api-mvp",
+						"remedy-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"forgotpassword"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://localhost:4000/v1/auth/forgotpassword submit code",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"apos3@cadabra.studio\",\n\t\"newPassword\": \"sdf23\",\n\t\"code\": \"code123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/v1/auth/forgotpassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"v1",
+								"auth",
+								"forgotpassword"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "user_sid=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "213"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"d5-VGYYBBDqcZmmm5ec3lwLB83gcto\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 10 Aug 2020 12:45:54 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": \"InvalidParameterException\",\n    \"name\": \"InvalidParameterException\",\n    \"message\": \"1 validation error detected: Value at 'password' failed to satisfy constraint: Member must have length greater than or equal to 6\"\n}"
+				},
+				{
+					"name": "http://localhost:4000/v1/auth/forgotpassword",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"apos3@cadabra.studio\",\n\t\"newPassword\": \"asdfASDF!3\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/v1/auth/forgotpassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"v1",
+								"auth",
+								"forgotpassword"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "user_sid=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 10 Aug 2020 12:26:56 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "OK"
+				}
+			]
+		},
+		{
+			"name": "https://api-mvp.remedy-dev.com/v1/api/userinfo",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api-mvp.remedy-dev.com/v1/api/userinfo",
+					"protocol": "https",
+					"host": [
+						"api-mvp",
+						"remedy-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"api",
+						"userinfo"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://localhost:4000/v1/api/userinfo",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"apos4@cadabra.studio\",\n\t\"password\":\"asdfASDF!1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/v1/api/userinfo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"v1",
+								"api",
+								"userinfo"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "126"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"7e-z6EWlIkdrPRJaExVjPMscdsERl4\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Aug 2020 13:25:03 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"_id\": \"6233d7f0-de31-11ea-b6ff-4b83f1ad578b\",\n    \"email\": \"apos6@remedy-dev.com\",\n    \"cognitoUserName\": \"apos6@remedy-dev.com\",\n    \"__v\": 0\n}"
+				}
+			]
+		},
+		{
+			"name": "https://api-mvp.remedy-dev.com/v1/api/userinfo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"anyfield1\": \"anyvalue1\",\n\t\"anyfield2\": \"anyvalue2\"\n}"
+				},
+				"url": {
+					"raw": "https://api-mvp.remedy-dev.com/v1/api/userinfo",
+					"protocol": "https",
+					"host": [
+						"api-mvp",
+						"remedy-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"api",
+						"userinfo"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://localhost:4000/v1/api/userinfo Copy",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"anyfield1\": \"anyvalue1\",\n\t\"anyfield2\": \"anyvalue2\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/v1/api/userinfo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"v1",
+								"api",
+								"userinfo"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "57"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"39-NaLnC2PmP3ek0TRypyBVy6WkX6g\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Aug 2020 13:29:17 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"got\": {\n        \"anyfield1\": \"anyvalue1\",\n        \"anyfield2\": \"anyvalue2\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "https://api-mvp.remedy-dev.com/v1/api/usersurvey",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"surveyField1\": \"surveyValue1\",\n\t\"surveyField2\": \"surveyValue2\"\n}"
+				},
+				"url": {
+					"raw": "https://api-mvp.remedy-dev.com/v1/api/usersurvey",
+					"protocol": "https",
+					"host": [
+						"api-mvp",
+						"remedy-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"api",
+						"usersurvey"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://localhost:4000/v1/api/userinfo Copy",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"surveyField1\": \"surveyValue1\",\n\t\"surveyField2\": \"surveyValue2\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/v1/api/usersurvey",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"v1",
+								"api",
+								"usersurvey"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "46"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2e-sdZf5ON0lBeKKtf7hTbmambf7AQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Aug 2020 13:36:46 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"_id\": \"31342220-de33-11ea-b188-4b59e5714e64\"\n}"
+				}
+			]
+		},
+		{
+			"name": "https://api-mvp.remedy-dev.com/v1/api/usersurvey",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api-mvp.remedy-dev.com/v1/api/usersurvey",
+					"protocol": "https",
+					"host": [
+						"api-mvp",
+						"remedy-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"api",
+						"usersurvey"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://localhost:4000/v1/api/usersurvey Copy",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"apos4@cadabra.studio\",\n\t\"password\":\"asdfASDF!1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/v1/api/usersurvey",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"v1",
+								"api",
+								"usersurvey"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "339"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"153-OdBv6/nNMFOfACnfHqFwrwR49RU\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Aug 2020 13:39:28 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"surveys\": [\n        {\n            \"_id\": \"eb0229a0-de32-11ea-b6ff-4b83f1ad578b\",\n            \"__v\": 0,\n            \"surveyField1\": \"surveyValue1\",\n            \"surveyField2\": \"surveyValue2\",\n            \"userId\": \"6233d7f0-de31-11ea-b6ff-4b83f1ad578b\"\n        },\n        {\n            \"_id\": \"31342220-de33-11ea-b188-4b59e5714e64\",\n            \"__v\": 0,\n            \"surveyField1\": \"surveyValue1\",\n            \"surveyField2\": \"surveyValue2\",\n            \"userId\": \"6233d7f0-de31-11ea-b6ff-4b83f1ad578b\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "https://api-mvp.remedy-dev.com/v1/api/usersurvey?id=123",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api-mvp.remedy-dev.com/v1/api/usersurvey?id=eb0229a0-de32-11ea-b6ff-4b83f1ad578b",
+					"protocol": "https",
+					"host": [
+						"api-mvp",
+						"remedy-dev",
+						"com"
+					],
+					"path": [
+						"v1",
+						"api",
+						"usersurvey"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "eb0229a0-de32-11ea-b6ff-4b83f1ad578b"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://localhost:4000/v1/api/usersurvey Copy",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"apos4@cadabra.studio\",\n\t\"password\":\"asdfASDF!1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/v1/api/usersurvey?id=eb0229a0-de32-11ea-b6ff-4b83f1ad578b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"v1",
+								"api",
+								"usersurvey"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "eb0229a0-de32-11ea-b6ff-4b83f1ad578b"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "162"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"a2-UPYt3p0kS1iuzCCSMhqxt+HGWWA\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Aug 2020 13:40:45 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"_id\": \"eb0229a0-de32-11ea-b6ff-4b83f1ad578b\",\n    \"__v\": 0,\n    \"surveyField1\": \"surveyValue1\",\n    \"surveyField2\": \"surveyValue2\",\n    \"userId\": \"6233d7f0-de31-11ea-b6ff-4b83f1ad578b\"\n}"
+				}
+			]
+		}
+	],
+	"protocolProfileBehavior": {}
+}
