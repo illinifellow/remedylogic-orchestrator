@@ -4,7 +4,7 @@
 const AWS = require('aws-sdk')
 const path = require("path")
 const fs = require('fs')
-const bucketName = require('../helpers/resourceName')('remedy-backend-storage')
+const bucketName = require('../helpers/resourceName').get('remedy-backend-storage')
 
 const uploadDir = function(s3Path, bucketName) {
 

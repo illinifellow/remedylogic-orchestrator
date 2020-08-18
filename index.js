@@ -125,7 +125,7 @@ if (toExit) {
   }
 
   const apiRoot = express()
-  apiRoot.post('/api/processusersurvey', auth.authMiddleware, api.processUserSurvey)
+  apiRoot.post('/api/processusersurvey', api.processUserSurvey)
 
 // TODO: Api Version Is Here
   app.use(`/${appVersion}`, apiRoot)

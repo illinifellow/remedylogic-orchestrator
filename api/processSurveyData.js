@@ -1,20 +1,22 @@
 'use strict'
-const surveyDataDo = require("../dataObjects/processSurveyDataDo")
-const sendEmail = require('../aws/ses').sendEmail
+const processSurveyDataDo = require("../dataObjects/processSurveyDataDo")
 const cls = require('cls-hooked')
 const uuidv1 = require('uuid/v1')
+const analyzerService = require('../services/analyzerService')
+const filesProcessor = require('../services/analyzerService')
 
-async function saveUserSurvey(req, res) {
+async function processSurveyData(req, res) {
   try {
     const ns = cls.getNamespace('session')
-    const userId  = ns.get('userId')
-    const _id = req.body._id || uuidv1()
+    const _id = uuidv1()
     const data = req.body
 
-    const result = await surveyDataDo.update(_id, {userId, ...data})
-    //const messageId = await sendEmail({ name: "Bobby Brown", favoriteanimal: "cat" }, result.email)
-    //await surveyDataDo.update(newUserId, { surveySubmittedEmailMessageId: messageId })
-    res.send({_id: result._id})
+    await processSurveyDataDo.update(_id, {userId: data.userId, survey:data, stage: "filesprocessor"})
+    const fileProcessingResult = await filesProcessor('filesprocessor', data)
+    await processSurveyDataDo.update(_id, {filesProcessorData: fileProcessingResult, stage:"analyzer"})
+    const analyzerResult = await analyzerService('analyzer', data)
+    await processSurveyDataDo.update(_id, {analyzerData: analyzerResult, stage:"done"})
+    res.send({_id: data._id, analyzerResult, fileProcessingResult})
   } catch (e) {
     console.error('status error ', e)
     res.status(500)
@@ -22,17 +24,6 @@ async function saveUserSurvey(req, res) {
   }
 }
 
-async function getUserSurvey(req, res) {
-  if (req.query.id) {
-    const userData = await surveyDataDo.query({_id: req.query.id})
-    return res.send({...userData[0]})
-  } else {
-    const userData = await surveyDataDo.query()
-    return res.send({surveys:userData})
-  }
-}
-
 module.exports = {
-  saveUserSurvey,
-  getUserSurvey
+  processSurveyData
 }

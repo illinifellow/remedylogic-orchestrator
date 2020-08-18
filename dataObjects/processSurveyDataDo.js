@@ -7,11 +7,13 @@ const Number = Types.Number
 const String = Types.String
 const ObjectId = Schema.ObjectId
 const Mixed = Types.Mixed
+const Date = Types.Date
 
 // TODO Add composite key for email and something else. User with same email can appear twice
 const processSurveyDataSchema = new Schema({
   _id: String,
   userId: String,
+  date: Date,
   survey: Mixed,
   stage: String,
   initialS3Folder: String,

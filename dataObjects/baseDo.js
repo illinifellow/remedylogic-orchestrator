@@ -4,7 +4,7 @@ const models = mongoose.models
 const Long = require('mongodb').Long
 const awsSecretManager = require('../aws/awsSecretsManager')
 const fs = require('fs')
-const mongoDatabaseName = require('../helpers/resourceName')('remedyorchestratordb')
+const mongoDatabaseName = require('../helpers/resourceName').get('remedyorchestratordb')
 
 let awsCreds
 

@@ -1,4 +1,4 @@
-function create(resource) {
+function get(resource) {
   let realResource
   if (process.env.AWS_ACCOUNT == "prod") {
     realResource = `${resource}-${process.env.APP_ENVIRONMENT}`
@@ -8,4 +8,17 @@ function create(resource) {
   return realResource
 }
 
-module.exports = create
+function getUrl(resource) {
+  let realResource
+  if (process.env.AWS_ACCOUNT == "prod") {
+    realResource = `http://${resource}-${process.env.APP_ENVIRONMENT}.remedylogic.com`
+  } else {
+    realResource = `http://${resource}-${process.env.APP_ENVIRONMENT}.remedy-${process.env.AWS_ACCOUNT}.com`
+  }
+  return realResource
+}
+
+module.exports = {
+  get,
+  getUrl
+}
