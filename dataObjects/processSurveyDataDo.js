@@ -16,9 +16,10 @@ const processSurveyDataSchema = new Schema({
   date: Date,
   survey: Mixed,
   stage: String,
-  initialS3Folder: String,
+  uploadedS3Folder: String,
   parsedS3Folder: String,
-  resultsS3Folder: String
+  result: [Mixed],
+  stagesLog: [Mixed]
 
 }, {strict:false})
 

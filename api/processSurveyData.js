@@ -3,7 +3,7 @@ const processSurveyDataDo = require("../dataObjects/processSurveyDataDo")
 const cls = require('cls-hooked')
 const uuidv1 = require('uuid/v1')
 const analyzerService = require('../services/analyzerService')
-const filesProcessor = require('../services/analyzerService')
+const filesProcessor = require('../services/filesProcessorService')
 
 async function processSurveyData(req, res) {
   try {
@@ -11,12 +11,31 @@ async function processSurveyData(req, res) {
     const _id = uuidv1()
     const data = req.body
 
-    await processSurveyDataDo.update(_id, {userId: data.userId, survey:data, stage: "filesprocessor"})
-    const fileProcessingResult = await filesProcessor('filesprocessor', data)
-    await processSurveyDataDo.update(_id, {filesProcessorData: fileProcessingResult, stage:"analyzer"})
-    const analyzerResult = await analyzerService('analyzer', data)
-    await processSurveyDataDo.update(_id, {analyzerData: analyzerResult, stage:"done"})
-    res.send({_id: data._id, analyzerResult, fileProcessingResult})
+    await processSurveyDataDo.update(_id, {uploadedS3Folder: data.s3folder, surveyData: data.surveyData, stage: "filesprocessor"})
+    const fileProcessingResult = await filesProcessor.parseFiles('filesprocessor', {s3folder: data.s3folder})
+    await processSurveyDataDo.update(_id, { $push: {stagesLog:{
+          stage: "filesprocessor",
+          date: new Date(),
+          data: fileProcessingResult
+        }}})
+    if (fileProcessingResult.error) {
+      console.error('Error processing uploaded files ', fileProcessingResult.error)
+      // TODO: then what???
+    }
+    await processSurveyDataDo.update(_id, {parsedS3folder: fileProcessingResult.parsedS3folder, stage:"analyzer"})
+    const analyzerResult = await analyzerService('analyzer', fileProcessingResult)
+    await processSurveyDataDo.update(_id, {result: analyzerResult, stage:"done"})
+    await processSurveyDataDo.update(_id, { $push: {stagesLog:{
+        stage: "analyzer",
+        date: new Date(),
+        data: analyzerResult
+      }}})
+    if (analyzerResult.error) {
+      console.error('Error analyzing data ', analyzerResult.error)
+      // TODO: then what???
+    }
+
+    res.send({_id: data._id, result: analyzerResult})
   } catch (e) {
     console.error('status error ', e)
     res.status(500)
