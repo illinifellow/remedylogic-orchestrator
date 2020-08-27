@@ -5,10 +5,11 @@ ENV APP_ENVIRONMENT=mvp1
 ENV AWS_ACCOUNT=dev
 
 #RUN apk update && apk add bash
+RUN apk update && apk add --no-cache openssh
 
 COPY . /app
 WORKDIR app
 RUN npm i
 
 EXPOSE 4000
-CMD npm run start
+CMD ./start.sh
