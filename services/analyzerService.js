@@ -2,7 +2,7 @@ const BaseService = require("./BaseService")
 
 class AnalyzerService extends BaseService{
   constructor() {
-    super('analyzer')
+    super('dicom-analyzer-backend')
   }
 
   analyze(s3folder, surveyData){

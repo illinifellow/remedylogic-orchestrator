@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 if [ -z "${USESSH+x}" ];
 then
 echo "USESSH for mongo is unset";

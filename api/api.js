@@ -1,6 +1,6 @@
 'use strict'
-const processSurveyData = require('./processSurveyData')
+const processUserSurvey = require('./processUserSurvey').processUserSurvey
 
 module.exports = {
-  processSurveyData
+  processUserSurvey
 }

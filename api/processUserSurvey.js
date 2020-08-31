@@ -5,7 +5,7 @@ const uuidv1 = require('uuid/v1')
 const analyzerService = require('../services/analyzerService')
 const filesProcessor = require('../services/filesProcessorService')
 
-async function processSurveyData(req, res) {
+async function processUserSurvey(req, res) {
   try {
     const ns = cls.getNamespace('session')
     const _id = uuidv1()
@@ -44,5 +44,5 @@ async function processSurveyData(req, res) {
 }
 
 module.exports = {
-  processSurveyData
+  processUserSurvey
 }

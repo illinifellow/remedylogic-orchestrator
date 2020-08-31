@@ -1,4 +1,4 @@
-const getServiceUrl = require('./resourceName').getUrl
+const getServiceUrl = require('../helpers/resourceName').getUrl
 const axios = require('axios')
 
 class BaseService {
@@ -8,7 +8,7 @@ class BaseService {
   async execute(command, data) {
     try {
       return await axios({
-        url: getServiceUrl(this.name),
+        url: `${getServiceUrl(this.name)}/${command}`,
         method: 'post',
         responseType: 'json',
         data
