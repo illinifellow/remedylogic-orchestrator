@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
-      - REPOSITORY_URI=230730535977.dkr.ecr.us-east-2.amazonaws.com/remedylogic-backend
+      - REPOSITORY_URI=230730535977.dkr.ecr.us-east-2.amazonaws.com/remedylogic-orchestrator-dev
       - ENVIRONMENT=dev
       - sed -i s/dev/$ENVIRONMENT/ Dockerfile
       - $(aws ecr get-login --region us-east-2 --no-include-email)
@@ -15,6 +15,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
+      - echo  $REPOSITORY_URI $ENVIRONMENT
       - docker build -t $REPOSITORY_URI:latest . --build-arg ENVIRONMENT=$ENVIRONMENT
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
