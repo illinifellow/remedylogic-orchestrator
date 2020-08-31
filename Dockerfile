@@ -12,4 +12,5 @@ WORKDIR app
 RUN npm i
 
 EXPOSE 4000
-CMD ./start.sh
+#CMD ./start.sh
+CMD npm run start
