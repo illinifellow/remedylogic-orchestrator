@@ -1,5 +1,6 @@
 // https://github.com/josephtzeng/hocon-parser
 const appVersion = 'v1'
+global.appVersion = appVersion
 global.__basedir = __dirname
 global.fetch = require('node-fetch')
 const AWS = require('aws-sdk')

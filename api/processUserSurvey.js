@@ -20,10 +20,16 @@ async function processUserSurvey(req, res) {
         }}})
     if (fileProcessingResult.error) {
       console.error('Error processing uploaded files ', fileProcessingResult.error)
-      // TODO: then what???
+      res.status(200)
+      return res.send(fileProcessingResult)
     }
     await processSurveyDataDo.update(_id, {parsedS3folder: fileProcessingResult.parsedS3folder, stage:"analyzer"})
-    const analyzerResult = await analyzerService('analyzer', fileProcessingResult)
+    const analyzerResult = await analyzerService.analyze(fileProcessingResult.parsedS3folder, data.surveyData)
+    if (analyzerResult.error) {
+      console.error('Error processing uploaded files ', analyzerResult.error)
+      res.status(200)
+      return res.send(analyzerResult)
+    }
     await processSurveyDataDo.update(_id, {result: analyzerResult, stage:"done"})
     await processSurveyDataDo.update(_id, { $push: {stagesLog:{
         stage: "analyzer",
@@ -32,7 +38,9 @@ async function processUserSurvey(req, res) {
       }}})
     if (analyzerResult.error) {
       console.error('Error analyzing data ', analyzerResult.error)
-      // TODO: then what???
+      console.error('Error processing uploaded files ', fileProcessingResult.error)
+      res.status(200)
+      return res.send(fileProcessingResult)
     }
 
     res.send({_id: data._id, result: analyzerResult})

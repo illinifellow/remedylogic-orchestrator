@@ -7,15 +7,19 @@ class BaseService {
   }
   async execute(command, data) {
     try {
+      const url = `${getServiceUrl(this.name)}/${global.appVersion}/api/${command}`
+      console.log(`calling ${url} with ${JSON.stringify(data)}`)
       return await axios({
-        url: `${getServiceUrl(this.name)}/${command}`,
+        url,
         method: 'post',
         responseType: 'json',
         data
       })
     } catch (e) {
       console.error(e)
-      throw e
+      return {
+        error: e
+      }
     }
   }
 }
