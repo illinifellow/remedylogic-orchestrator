@@ -15,7 +15,8 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - echo  $REPOSITORY_URI $ENVIRONMENT
+      - echo $REPOSITORY_URI 
+      - echo $ENVIRONMENT
       - docker build -t $REPOSITORY_URI:latest . --build-arg ENVIRONMENT=$ENVIRONMENT
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
@@ -24,7 +25,8 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - printf '[{"name":"mvp-dev","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
+      - printf '[{"name":"MVP-remedylogic-orchestrator-dev","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
+      - cat imageDetail.json
 artifacts:
   files:
     - imageDetail.json
