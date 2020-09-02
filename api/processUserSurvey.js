@@ -12,7 +12,7 @@ async function processUserSurvey(req, res) {
     const data = req.body
 
     await processSurveyDataDo.update(_id, {uploadedS3Folder: data.s3folder, surveyData: data.surveyData, stage: "filesprocessor"})
-    const fileProcessingResult = await filesProcessor.parseFiles('filesprocessor', {s3folder: data.s3folder})
+    const fileProcessingResult = await filesProcessor.parseFiles(data.s3folder)
     await processSurveyDataDo.update(_id, { $push: {stagesLog:{
           stage: "filesprocessor",
           date: new Date(),

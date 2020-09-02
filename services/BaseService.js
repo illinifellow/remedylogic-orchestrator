@@ -8,6 +8,7 @@ class BaseService {
   async execute(command, data) {
     try {
       const url = `${getServiceUrl(this.name)}/${global.appVersion}/api/${command}`
+      //const url = 'http://localhost:4003/v1/api/process'
       console.log(`calling ${url} with ${JSON.stringify(data)}`)
       return await axios({
         url,
