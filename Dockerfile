@@ -4,6 +4,7 @@ ENV REGION=us-east-2
 ENV APP_ENVIRONMENT=mvp1
 ENV AWS_ACCOUNT=dev
 ENV AWS_ENDPOINT=orchestrator.mvp.remedydev
+ENV PORT=80
 
 #RUN apk update && apk add bash
 RUN apk update && apk add --no-cache openssh bash
