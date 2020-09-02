@@ -25,7 +25,7 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - printf '[{"name":"MVP-remedylogic-orchestrator-dev","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
+      - printf '[{"name":"orchestrator-mvp-remedydev","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
       - cat imageDetail.json
 artifacts:
   files:
