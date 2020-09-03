@@ -45,7 +45,7 @@ async function processUserSurvey(req, res) {
 
     res.send({_id: data._id, result: analyzerResult})
   } catch (e) {
-    console.error('status error ', e)
+    console.error('processUserSurvey error ', e)
     res.status(500)
     res.send(e)
   }

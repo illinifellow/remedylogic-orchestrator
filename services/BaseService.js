@@ -5,11 +5,12 @@ class BaseService {
   constructor(serviceName) {
     this.name = serviceName
   }
+
   async execute(command, data) {
     try {
       const url = `${getServiceUrl(this.name)}/${global.appVersion}/api/${command}`
       //const url = 'http://localhost:4003/v1/api/process'
-      console.log(`calling ${url} with ${JSON.stringify(data)}`)
+      console.log(`calling ${url} with data ${JSON.stringify(data)}`)
       return await axios({
         url,
         method: 'post',
@@ -17,9 +18,22 @@ class BaseService {
         data
       })
     } catch (e) {
-      console.error(e)
+      let error
+      if (e.response) {
+        let {status, statusText, headers, data} = e.response
+        error = {
+          status, statusText, headers, data,
+          systemMessage: e.message
+        }
+        if (data && data.error) {
+          error.message = data.error
+        }
+      } else {
+        error = {systemMessage: e.message}
+      }
+      console.error(error)
       return {
-        error: e
+        error
       }
     }
   }
