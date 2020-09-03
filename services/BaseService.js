@@ -18,7 +18,7 @@ class BaseService {
         responseType: 'json',
         data
       })
-      console.log(`from ${url} received ${JSON.stringify(data)}`)
+      console.log(`from ${url} received ${JSON.stringify(res.data)}`)
       return res.data
     } catch (e) {
       let error
