@@ -7,16 +7,19 @@ class BaseService {
   }
 
   async execute(command, data) {
+    let url
     try {
-      const url = `${getServiceUrl(this.name)}/${global.appVersion}/api/${command}`
+      url = `${getServiceUrl(this.name)}/${global.appVersion}/api/${command}`
       //const url = 'http://localhost:4003/v1/api/process'
       console.log(`calling ${url} with data ${JSON.stringify(data)}`)
-      return await axios({
+      let res = await axios({
         url,
         method: 'post',
         responseType: 'json',
         data
       })
+      console.log(`from ${url} received ${JSON.stringify(data)}`)
+      return res.data
     } catch (e) {
       let error
       if (e.response) {
@@ -31,7 +34,7 @@ class BaseService {
       } else {
         error = {systemMessage: e.message}
       }
-      console.error(error)
+      console.error(`error calling ${url} error:${JSON.stringify(error)}`)
       return {
         error
       }
