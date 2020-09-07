@@ -5,8 +5,8 @@ class AnalyzerService extends BaseService{
     super('dicom-analyzer-backend')
   }
 
-  analyze(s3folder, surveyData){
-    return this.execute('analyze',{s3folder, surveyData})
+  analyze(s3folder, parsedFilesData){
+    return this.execute('analyze', parsedFilesData)
   }
 }
 

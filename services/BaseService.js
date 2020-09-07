@@ -4,12 +4,21 @@ const axios = require('axios')
 class BaseService {
   constructor(serviceName) {
     this.name = serviceName
+    this.debugUrl=""
+  }
+
+  setDebugUrl(debugUrl) {
+    this.debugUrl= debugUrl
   }
 
   async execute(command, data) {
     let url
     try {
       url = `${getServiceUrl(this.name)}/${global.appVersion}/api/${command}`
+      if (this.debugUrl && process.env.NODE_ENV === "debug") {
+        console.warn(`USING DEBUG URL ${url}`)
+        url = this.debugUrl
+      }
       //const url = 'http://localhost:4003/v1/api/process'
       console.log(`calling ${url} with data ${JSON.stringify(data)}`)
       let res = await axios({
