@@ -4,8 +4,9 @@ const axios = require('axios')
 class BaseService {
   constructor(serviceName) {
     this.name = serviceName
-    this.debugUrl=""
   }
+  #debugUrl
+  #name
 
   setDebugUrl(debugUrl) {
     this.debugUrl= debugUrl

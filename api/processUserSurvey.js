@@ -26,19 +26,19 @@ async function processUserSurvey(req, res) {
     }
     await processSurveyDataDo.update(_id, {parsedS3folder: fileProcessingResult.parsedS3folder, parsedFilesData: fileProcessingResult.data, stage:"analyzer"})
     analyzerService.setDebugUrl('http://localhost:5000/v1/api/analyze')
-    const analyzerResult = await analyzerService.analyze(fileProcessingResult.parsedS3folder, fileProcessingResult.data)
-    if (analyzerResult.error) {
-      console.error('Error analyzing data ', analyzerResult.error)
+    const imageAnalyzerResult = await analyzerService.analyze(fileProcessingResult.parsedS3folder, fileProcessingResult.data)
+    if (imageAnalyzerResult.error) {
+      console.error('Error analyzing data ', imageAnalyzerResult.error)
       res.status(200)
-      return res.send(analyzerResult)
+      return res.send(imageAnalyzerResult)
     }
-    await processSurveyDataDo.update(_id, {result: analyzerResult, stage:"done"})
+    await processSurveyDataDo.update(_id, {result: imageAnalyzerResult.result, stage:"done"})
     await processSurveyDataDo.update(_id, { $push: {stagesLog:{
         stage: "analyzer",
         date: new Date(),
-        data: analyzerResult
+        data: imageAnalyzerResult
       }}})
-    res.send({_id: data._id, result: analyzerResult})
+    res.send({_id: data._id, data: {imageAnalyzerResult: imageAnalyzerResult.result}})
   } catch (e) {
     console.error('processUserSurvey error ', e)
     res.status(500)
