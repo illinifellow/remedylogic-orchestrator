@@ -11,7 +11,7 @@ async function processUserSurvey(req, res) {
     const _id = uuidv1()
     const data = req.body
 
-    await processSurveyDataDo.update(_id, {uploadedS3Folder: data.s3folder, surveyData: data.surveyData, stage: "filesprocessor"})
+    await processSurveyDataDo.update(_id, {uploadedS3Folder: data.s3folder, surveyId: data.surveyId, surveyData: data.surveyData, stage: "filesprocessor"})
     filesProcessor.setDebugUrl('http://localhost:4003/v1/api/process')
     const fileProcessingResult = await filesProcessor.parseFiles(data.s3folder)
     await processSurveyDataDo.update(_id, { $push: {stagesLog:{

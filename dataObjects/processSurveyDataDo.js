@@ -14,13 +14,14 @@ const processSurveyDataSchema = new Schema({
   _id: String,
   userId: String,
   date: Date,
-  survey: Mixed,
+  surveyId: String,
+  surveyData: Mixed,
   stage: String,
   uploadedS3Folder: String,
   parsedS3Folder: String,
-  result: [Mixed],
+  parsedFilesData: Mixed,
+  result: Mixed,
   stagesLog: [Mixed]
-
 }, {strict:false})
 
 class ProcessSurveyDataDo extends BaseDo {

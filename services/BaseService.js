@@ -17,10 +17,9 @@ class BaseService {
     try {
       url = `${getServiceUrl(this.name)}/${global.appVersion}/api/${command}`
       if (this.debugUrl && process.env.NODE_ENV === "debug") {
-        console.warn(`USING DEBUG URL ${url}`)
+        console.warn(`USING DEBUG URL ${this.debugUrl} instead of ${url}`)
         url = this.debugUrl
       }
-      //const url = 'http://localhost:4003/v1/api/process'
       console.log(`calling ${url} with data ${JSON.stringify(data)}`)
       let res = await axios({
         url,
