@@ -32,13 +32,13 @@ async function processUserSurvey(req, res) {
       res.status(200)
       return res.send(imageAnalyzerResult)
     }
-    await processSurveyDataDo.update(_id, {result: imageAnalyzerResult.result, stage:"done"})
+    await processSurveyDataDo.update(_id, {result: imageAnalyzerResult, stage:"done"})
     await processSurveyDataDo.update(_id, { $push: {stagesLog:{
         stage: "analyzer",
         date: new Date(),
         data: imageAnalyzerResult
       }}})
-    res.send({_id: data._id, data: {imageAnalyzerResult: imageAnalyzerResult.result}})
+    res.send({_id: data._id, data: {imageAnalyzerResult: imageAnalyzerResult}})
   } catch (e) {
     console.error('processUserSurvey error ', e)
     res.status(500)
