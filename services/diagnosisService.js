@@ -2,7 +2,7 @@ const BaseService = require("./BaseService")
 
 class DiagnosisService extends BaseService{
   constructor() {
-    super('remedy-diagnosis')
+    super('diagnosis')
   }
 
   diagnosis(s3folder, surveyAndParsedFilesData){
