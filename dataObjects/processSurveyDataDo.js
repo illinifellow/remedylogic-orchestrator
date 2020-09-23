@@ -20,7 +20,8 @@ const processSurveyDataSchema = new Schema({
   uploadedS3Folder: String,
   parsedS3Folder: String,
   parsedFilesData: Mixed,
-  result: Mixed,
+  imageAnalyzerResult: Mixed,
+  diagnosisResult: Mixed,
   stagesLog: [Mixed]
 }, {strict:false})
 

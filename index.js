@@ -35,7 +35,7 @@ if (toExit) {
   const ns = cls.createNamespace('session')
   console.log("initializing connections and cache starting")
   const db = await require('./dataObjects/baseDo').initMongoDb()
-  const s3res = await s3.init()
+//  const s3res = await s3.init()
 
   console.log("initializing connections and cache finished")
 
