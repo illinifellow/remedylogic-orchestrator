@@ -78,7 +78,7 @@ if (toExit) {
     limits: { fileSize: 500 * 1024 * 1024 },
   }))
   app.use(mung.json((body, req, res) => { // middleware hook for response
-      console.log("res:", body ? JSON.stringify(body): body)
+      console.log(`res: ${res.statusCode}`, body ? JSON.stringify(body): body)
       return body
     })
   )
@@ -95,7 +95,7 @@ if (toExit) {
 
   app.use(function (req, res, next) {
     console.log("\x1b[36m%s\x1b[0m", `req origin: ${req.headers['origin']}`)
-    console.log("req:", req.body ? JSON.stringify(req.body) : req.body)
+    console.log(`req: ${req.originalUrl}`, req.body ? JSON.stringify(req.body) : req.body)
     // console.log("expressSession " + JSON.stringify(ns.get('expressSession')))
     // console.log(req.method + ' ' + currentTime)
     if (req.method === 'OPTIONS') {
