@@ -1,8 +1,8 @@
 FROM node:14.4.0-alpine
 
 ENV REGION=us-east-2
-ENV APP_ENVIRONMENT=mvp
-ENV AWS_ACCOUNT=dev
+ENV DEPLOYMENT_ENV=dev
+ENV CUSTOM_APP_LABEL=show
 ENV PORT=80
 
 #RUN apk update && apk add bash

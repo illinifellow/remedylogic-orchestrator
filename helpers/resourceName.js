@@ -1,20 +1,18 @@
 function get(resource) {
   let realResource
-  // if (process.env.AWS_ACCOUNT == "prod") {
-  //   realResource = `${resource}-${process.env.APP_ENVIRONMENT}`
-  // } else {
-  realResource = `${resource}-${process.env.AWS_ACCOUNT}-${process.env.APP_ENVIRONMENT}`
-  // }
+  if (process.env.DEPLOYMENT_ENV == "prod") {
+    realResource = process.env.CUSTOM_APP_LABEL ? `${resource}-${process.env.CUSTOM_APP_LABEL}` : resource
+  } else {
+    realResource = process.env.CUSTOM_APP_LABEL ? `${resource}-${process.env.CUSTOM_APP_LABEL}-${process.env.DEPLOYMENT_ENV}` : `${resource}-${process.env.DEPLOYMENT_ENV}`
+  }
   return realResource
 }
 
 function getUrl(resource) {
   let realResource
-  // if (process.env.AWS_ACCOUNT == "prod") {
-  //   realResource = `http://${resource}.${process.env.APP_ENVIRONMENT}.dev`
-  // } else {
-  realResource = `http://${resource}.${process.env.APP_ENVIRONMENT}.remedy${process.env.AWS_ACCOUNT}`
-  // }
+  realResource = process.env.CUSTOM_APP_LABEL ?
+    `http://${resource}-${process.env.CUSTOM_APP_LABEL}.remedy${process.env.DEPLOYMENT_ENV}`
+    : `http://${resource}.remedy${process.env.DEPLOYMENT_ENV}`
   return realResource
 }
 

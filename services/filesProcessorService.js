@@ -2,7 +2,7 @@ const BaseService = require("./BaseService")
 
 class FilesProcessorService extends BaseService{
   constructor() {
-    super('dicom-preprocessor-api')
+    super('mri-preprocessor')
   }
 
   parseFiles(s3folder){
