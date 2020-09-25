@@ -14,12 +14,12 @@ const s3 = require('./aws/s3')
 console.log(process.env)
 
 let toExit = false
-if (process.env.AWS_ACCOUNT === undefined) {
-  console.error('AWS_ACCOUNT should be set')
+if (process.env.DEPLOYMENT_ENV === undefined) {
+  console.error('DEPLOYMENT_ENV should be set')
   toExit = true
 }
-if (process.env.APP_ENVIRONMENT === undefined) {
-  console.error('APP_ENVIRONMENT should be set')
+if (process.env.CUSTOM_APP_LABEL === undefined) {
+  console.error('CUSTOM_APP_LABEL should be set')
   toExit = true
 }
 if (process.env.REGION === undefined) {
