@@ -5,7 +5,7 @@ class DiagnosisService extends BaseService{
     super('diagnosis')
   }
 
-  diagnosis(s3folder, surveyAndParsedFilesData){
+  diagnosis(surveyAndParsedFilesData){
     return this.execute('diagnosis', surveyAndParsedFilesData)
   }
 }
