@@ -25,8 +25,8 @@ phases:
       - IMAGE_TAG=$(echo `date +%Y%m%d`.$CODEBUILD_BUILD_NUMBER)
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - REACT_APP_VERSION=$COMMIT_HASH
-      - BUILD_ARGS="$BUILD_ARGS --build-arg ARG_AWS_REGION=$AWS_REGION"
-      - BUILD_ARGS="$BUILD_ARGS --build-arg ARG_REACT_APP_VERSION=$REACT_APP_VERSION"
+      - BUILD_ARGS="$BUILD_ARGS --build-arg AWS_REGION=$AWS_REGION"
+      - BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_VERSION=$REACT_APP_VERSION"
       - |
         case "$AWS_ACCOUNT_ID" in
           230730535977)
@@ -36,13 +36,13 @@ phases:
             DEPLOYMENT_ENV=prod
             ;;
         esac
-      - BUILD_ARGS="$BUILD_ARGS --build-arg ARG_DEPLOYMENT_ENV=$DEPLOYMENT_ENV"
+      - BUILD_ARGS="$BUILD_ARGS --build-arg DEPLOYMENT_ENV=$DEPLOYMENT_ENV"
       # $CUSTOM_ENVS - Exporting from CodeBuild setting
       # Add all $CUSTOM_ENVS as BUILD_ARGS
       - | 
         IFS=', ' read -r -a ARRAY_BUILD_ARGS <<< "$CUSTOM_ENVS"
-        for i in "${ARRAY_BUILD_ARGS[@]}"; do BUILD_ARGS="$BUILD_ARGS --build-arg ARG_$i"; done
-      #- BUILD_ARGS="$BUILD_ARGS --build-arg ARG_CUSTOM_APP_LABEL=$CUSTOM_APP_LABEL"
+        for i in "${ARRAY_BUILD_ARGS[@]}"; do BUILD_ARGS="$BUILD_ARGS --build-arg $i"; done
+      #- BUILD_ARGS="$BUILD_ARGS --build-arg CUSTOM_APP_LABEL=$CUSTOM_APP_LABEL"
       - echo "====== Begin all environment variables ======"
       - set
       - echo "====== End all environment variables ======"

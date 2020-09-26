@@ -44,7 +44,7 @@ async function createBucket(bucketName) {
     let params = {
       Bucket: bucketName,
       CreateBucketConfiguration: {
-        LocationConstraint: process.env.REGION
+        LocationConstraint: process.env.AWS_REGION
       }
     }
     let res = await (new AWS.S3()).createBucket(params).promise()

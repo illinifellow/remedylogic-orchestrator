@@ -22,8 +22,8 @@ if (process.env.CUSTOM_APP_LABEL === undefined) {
   console.error('CUSTOM_APP_LABEL should be set')
   toExit = true
 }
-if (process.env.REGION === undefined) {
-  console.error('REGION should be set')
+if (process.env.AWS_REGION === undefined) {
+  console.error('AWS_REGION should be set')
   toExit = true
 }
 if (toExit) {

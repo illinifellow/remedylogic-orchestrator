@@ -1,6 +1,6 @@
 'use strict'
 let AWS = require('aws-sdk')
-let region = process.env.REGION
+let region = process.env.AWS_REGION
 
 let getDatabaseCredentials = async () => {
   try {
