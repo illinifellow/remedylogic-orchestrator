@@ -14,15 +14,14 @@ const s3 = require('./aws/s3')
 console.log(process.env)
 
 let toExit = false
-if (process.env.DEPLOYMENT_ENV === undefined) {
+if (process.env.DEPLOYMENT_ENV === undefined || process.env.DEPLOYMENT_ENV =="" || process.env.DEPLOYMENT_ENV.trim() == "") {
   console.error('DEPLOYMENT_ENV should be set')
   toExit = true
 }
-if (process.env.CUSTOM_APP_LABEL === undefined) {
-  console.error('CUSTOM_APP_LABEL should be set')
-  toExit = true
+if (process.env.CUSTOM_APP_LABEL === undefined || process.env.CUSTOM_APP_LABEL =="" || process.env.CUSTOM_APP_LABEL.trim() == "") {
+  console.warn('CUSTOM_APP_LABEL has not been set')
 }
-if (process.env.AWS_REGION === undefined) {
+if (process.env.AWS_REGION === undefined || process.env.AWS_REGION =="" || process.env.AWS_REGION.trim() == "") {
   console.error('AWS_REGION should be set')
   toExit = true
 }
