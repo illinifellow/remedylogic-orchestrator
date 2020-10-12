@@ -1,0 +1,66 @@
+version: 0.2
+
+# The build environment is expected to define these variables:
+# DEPLOYMENT_ENV - mandatory, defines the environment (dev/stage/prod)
+# CUSTOM_APP_LABEL - optional, may be missing, or may define an additional application label
+# DOCKER_REGISTRY - optional, the address of the docker container registry (e.g. 230730535977.dkr.ecr.us-east-2.amazonaws.com)
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - AWS_ACCOUNT_ID=$(echo $CODEBUILD_BUILD_ARN | awk -F ':' '{print $5}')
+      - |
+        if [ -z "AWS_REGION" ]; then
+          AWS_REGION=$(echo $CODEBUILD_BUILD_ARN | awk -F ':' '{print $4}')
+        fi
+      - |
+        # If $DOCKER_REGISTRY is not defined then we can construct a deafult value
+        if [ -z "$DOCKER_REGISTRY" ]; then
+          DOCKER_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+        fi
+      - APP_NAME=$(echo $CODEBUILD_INITIATOR | sed 's|.*/||')
+      - REPOSITORY_URI=$DOCKER_REGISTRY/$APP_NAME
+      - IMAGE_TAG=$(echo `date +%Y%m%d`.$CODEBUILD_BUILD_NUMBER)
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - REACT_APP_VERSION=$COMMIT_HASH
+      - BUILD_ARGS="$BUILD_ARGS --build-arg AWS_REGION=$AWS_REGION"
+      - BUILD_ARGS="$BUILD_ARGS --build-arg REACT_APP_VERSION=$REACT_APP_VERSION"
+      - |
+        case "$AWS_ACCOUNT_ID" in
+          230730535977)
+            DEPLOYMENT_ENV=dev
+            ;;
+          955107129388)
+            DEPLOYMENT_ENV=prod
+            ;;
+        esac
+      - BUILD_ARGS="$BUILD_ARGS --build-arg DEPLOYMENT_ENV=$DEPLOYMENT_ENV"
+      # $CUSTOM_ENVS - Exporting from CodeBuild setting
+      # Add all $CUSTOM_ENVS as BUILD_ARGS
+      - | 
+        IFS=', ' read -r -a ARRAY_BUILD_ARGS <<< "$CUSTOM_ENVS"
+        for i in "${ARRAY_BUILD_ARGS[@]}"; do BUILD_ARGS="$BUILD_ARGS --build-arg $i"; done
+      #- BUILD_ARGS="$BUILD_ARGS --build-arg CUSTOM_APP_LABEL=$CUSTOM_APP_LABEL"
+      - echo "====== Begin all environment variables ======"
+      - set
+      - echo "====== End all environment variables ======"
+      - $(aws ecr get-login --region us-east-2 --no-include-email)
+  build:
+    commands:
+      - echo Build started on `date`, code version $COMMIT_HASH
+      - echo Building the Docker image...
+      - docker build -t $REPOSITORY_URI:latest $BUILD_ARGS .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - printf '[{"name":"'$APP_NAME'","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
+      - cat imageDetail.json
+artifacts:
+  files:
+    - imageDetail.json
