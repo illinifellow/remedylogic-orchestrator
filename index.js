@@ -83,7 +83,7 @@ if (toExit) {
   )
 
   app.use(mung.headers((req, res) => { // middleware hook for response
-      console.log("res headers :", res.getHeaders())
+      console.log("res headers :", JSON.stringify(res.getHeaders()))
     })
   )
 
@@ -132,7 +132,7 @@ if (toExit) {
 
 // catch 404 and forward to error handler
   app.use((req, res, next) => {
-    console.error("Not Found", req.url, req.originalUrl)
+    console.error("Not Found", req.originalUrl)
     const err = new Error('Not Found')
     err.status = 404
     next(err)
@@ -140,7 +140,9 @@ if (toExit) {
 
 // error handler
   app.use((err, req, res, next) => {
-    console.error("ERROR!", err)
+    if (err.status != 404) {
+      console.error("ERROR!", err)
+    }
     // set locals, only providing error in development
     const error = {
       message: err.message,
@@ -149,6 +151,7 @@ if (toExit) {
     // render the error page
     res.status(err.status || 500)
     res.end(JSON.stringify(error))
+    console.log(`res: ${res.statusCode}`, error.message)
   })
 
   const port = process.env.PORT || 4000
