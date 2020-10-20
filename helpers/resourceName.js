@@ -1,3 +1,15 @@
+function checkEnv(env, isOptional) {
+  env = process.env[env]
+  if (env === undefined || env == "" || env.trim() == "") {
+    if (isOptional) {
+      console.warn(`${env} is not set`)
+    } else {
+      console.error(`${env} is not set`)
+      return true // should exit
+    }
+  }
+}
+
 function isNotBlank(string) {
   if (string) {
     string = string.trim()
@@ -26,5 +38,6 @@ function getUrl(resource) {
 
 module.exports = {
   get,
-  getUrl
+  getUrl,
+  checkEnv
 }

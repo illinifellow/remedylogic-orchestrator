@@ -12,19 +12,13 @@ const mongoose = require('mongoose')
 const s3 = require('./aws/s3')
 
 console.log(process.env)
+console.log("IP: ", Object.values(require('os').networkInterfaces()).reduce((r, list) => r.concat(list.reduce((rr, i) => rr.concat(i.family==='IPv4' && !i.internal && i.address || []), [])), []))
+console.log("Host name: ", require('os').hostname())
 
-let toExit = false
-if (process.env.DEPLOYMENT_ENV === undefined || process.env.DEPLOYMENT_ENV =="" || process.env.DEPLOYMENT_ENV.trim() == "") {
-  console.error('DEPLOYMENT_ENV should be set')
-  toExit = true
-}
-if (process.env.CUSTOM_APP_LABEL === undefined || process.env.CUSTOM_APP_LABEL =="" || process.env.CUSTOM_APP_LABEL.trim() == "") {
-  console.warn('CUSTOM_APP_LABEL has not been set')
-}
-if (process.env.AWS_REGION === undefined || process.env.AWS_REGION =="" || process.env.AWS_REGION.trim() == "") {
-  console.error('AWS_REGION should be set')
-  toExit = true
-}
+const checkEnv = require('./helpers/resourceName').checkEnv
+let toExit = checkEnv('DEPLOYMENT_ENV')
+toExit |= checkEnv('CUSTOM_APP_LABEL', true)
+toExit |= checkEnv('AWS_REGION')
 if (toExit) {
   process.exit(1)
 }
