@@ -65,19 +65,24 @@ if (toExit) {
     }
   )
 
-  app.use(fileUpload({
-    useTempFiles : true,
-    tempFileDir : '/tmp/',
-    limits: { fileSize: 500 * 1024 * 1024 },
-  }))
   app.use(mung.json((body, req, res) => { // middleware hook for response
-      console.log(`res: ${res.statusCode}`, body ? JSON.stringify(body): body)
+      //TODO insert request id here from cls
+      const responseData = {
+        statusCode: res.statusCode,
+        body: body ? JSON.stringify(body) : body,
+        headers: res.getHeaders()
+      }
+      console.log(`res: ${JSON.stringify(responseData)}`)
       return body
     })
   )
 
-  app.use(mung.headers((req, res) => { // middleware hook for response
-      console.log("res headers :", JSON.stringify(res.getHeaders()))
+  app.use(mung.headers((req, res) => { // middleware hook for response headers
+      const ns = cls.getNamespace('session')
+      const requestId = ns.get('requestId')
+      ns.set('requestId', requestId)
+      res.set('X-requestId', requestId)
+      console.log("res headers :", res.getHeaders())
     })
   )
 
@@ -118,6 +123,14 @@ if (toExit) {
     next();
   }
 
+  app.use(nocache)
+
+  app.use(async (req, res, next) => {
+      const ns = cls.getNamespace('session')
+      const requestId = req.headers['x-requestid']
+      ns.set('requestId', requestId)
+      next()
+  })
   const apiRoot = express()
   apiRoot.post('/api/processusersurvey', api.processUserSurvey)
 
