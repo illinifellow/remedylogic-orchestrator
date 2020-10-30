@@ -12,20 +12,13 @@ const mongoose = require('mongoose')
 const s3 = require('./aws/s3')
 
 console.log(process.env)
+console.log("IP: ", Object.values(require('os').networkInterfaces()).reduce((r, list) => r.concat(list.reduce((rr, i) => rr.concat(i.family==='IPv4' && !i.internal && i.address || []), [])), []))
+console.log("Host name: ", require('os').hostname())
 
-let toExit = false
-if (process.env.DEPLOYMENT_ENV === undefined) {
-  console.error('DEPLOYMENT_ENV should be set')
-  toExit = true
-}
-if (process.env.CUSTOM_APP_LABEL === undefined) {
-  console.error('CUSTOM_APP_LABEL should be set')
-  toExit = true
-}
-if (process.env.AWS_REGION === undefined) {
-  console.error('AWS_REGION should be set')
-  toExit = true
-}
+const checkEnv = require('./helpers/resourceName').checkEnv
+let toExit = checkEnv('DEPLOYMENT_ENV')
+toExit |= checkEnv('CUSTOM_APP_LABEL', true)
+toExit |= checkEnv('AWS_REGION')
 if (toExit) {
   process.exit(1)
 }
@@ -84,7 +77,7 @@ if (toExit) {
   )
 
   app.use(mung.headers((req, res) => { // middleware hook for response
-      console.log("res headers :", res.getHeaders())
+      console.log("res headers :", JSON.stringify(res.getHeaders()))
     })
   )
 
@@ -133,7 +126,7 @@ if (toExit) {
 
 // catch 404 and forward to error handler
   app.use((req, res, next) => {
-    console.error("Not Found", req.url, req.originalUrl)
+    console.error("Not Found", req.originalUrl)
     const err = new Error('Not Found')
     err.status = 404
     next(err)
@@ -141,7 +134,9 @@ if (toExit) {
 
 // error handler
   app.use((err, req, res, next) => {
-    console.error("ERROR!", err)
+    if (err.status != 404) {
+      console.error("ERROR!", err)
+    }
     // set locals, only providing error in development
     const error = {
       message: err.message,
@@ -150,6 +145,7 @@ if (toExit) {
     // render the error page
     res.status(err.status || 500)
     res.end(JSON.stringify(error))
+    console.log(`res: ${res.statusCode}`, error.message)
   })
 
   const port = process.env.PORT || 4000
