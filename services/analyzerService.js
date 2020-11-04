@@ -1,4 +1,4 @@
-const BaseService = require("./BaseService")
+const BaseService = require('@remedy-logic/service-common/services/BaseService')
 
 class AnalyzerService extends BaseService{
   constructor() {

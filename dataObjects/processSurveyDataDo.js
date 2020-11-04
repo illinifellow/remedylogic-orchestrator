@@ -1,4 +1,4 @@
-const BaseDo = require('./baseDo')
+const BaseDo = require('@remedy-logic/service-common/dataObjects/baseDo')
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
