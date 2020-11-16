@@ -1,6 +1,9 @@
+'use strict'
 const appVersion = 'v1'
+global.appVersion = appVersion
+global.appName = 'orchestrator'
+
 const baseApp = require('@remedy-logic/service-common')
-const cls = require('cls-hooked')
 
 ;( async () => {
   const express = require('express')
