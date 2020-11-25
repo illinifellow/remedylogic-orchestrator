@@ -48,6 +48,8 @@ phases:
       #- $(aws ecr get-login --region us-east-2 --no-include-email)
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - echo Logging in to Docker Hub...
+      - echo bM^b6ek8*86z | docker login --username remedybuild --password-stdin
   build:
     commands:
       - echo Build started on `date`, code version $COMMIT_HASH
