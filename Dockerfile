@@ -11,7 +11,7 @@ ENV CUSTOM_APP_LABEL=$CUSTOM_APP_LABEL
 ENV PORT=$PORT
 
 #RUN apk update && apk add bash
-RUN apk update && apk add --no-cache openssh bash
+RUN apk update && apk add --no-cache openssh bash curl
 
 COPY . /app
 WORKDIR app
