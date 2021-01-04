@@ -23,7 +23,13 @@ const processSurveyDataSchema = new Schema({
   imageAnalyzerResult: Mixed,
   diagnosisResult: Mixed,
   stagesLog: [Mixed]
-}, {strict:false})
+}, {
+  strict:false,
+  timestamps: {
+    createdAt: true,
+    updatedAt: true,
+  }
+})
 
 class ProcessSurveyDataDo extends BaseDo {
   constructor() {
