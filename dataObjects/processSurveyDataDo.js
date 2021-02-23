@@ -1,4 +1,4 @@
-const BaseDo = require('./baseDo')
+const BaseDo = require('@remedy-logic/service-common/dataObjects/baseDo')
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
@@ -7,13 +7,13 @@ const Number = Types.Number
 const String = Types.String
 const ObjectId = Schema.ObjectId
 const Mixed = Types.Mixed
-const Date = Types.Date
+const MongooseDate = Types.Date
 
 // TODO Add composite key for email and something else. User with same email can appear twice
 const processSurveyDataSchema = new Schema({
   _id: String,
   userId: String,
-  date: Date,
+  date: MongooseDate,
   surveyId: String,
   surveyData: Mixed,
   stage: String,
@@ -23,7 +23,13 @@ const processSurveyDataSchema = new Schema({
   imageAnalyzerResult: Mixed,
   diagnosisResult: Mixed,
   stagesLog: [Mixed]
-}, {strict:false})
+}, {
+  strict:false,
+  timestamps: {
+    createdAt: true,
+    updatedAt: true,
+  }
+})
 
 class ProcessSurveyDataDo extends BaseDo {
   constructor() {
