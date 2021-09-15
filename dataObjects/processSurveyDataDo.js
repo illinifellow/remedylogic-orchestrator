@@ -1,5 +1,5 @@
-const BaseDo = require('@remedy-logic/service-common/dataObjects/baseDo')
-const mongoose = require('mongoose')
+import BaseDo from '@remedy-logic/service-common/dataObjects/baseDo.js'
+import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 const Types = Schema.Types
@@ -37,4 +37,4 @@ class ProcessSurveyDataDo extends BaseDo {
   }
 }
 
-module.exports = new ProcessSurveyDataDo()
+export default ProcessSurveyDataDo

@@ -2,14 +2,15 @@
 const appVersion = 'v1'
 global.appVersion = appVersion
 global.appName = 'orchestrator'
-
-const baseApp = require('@remedy-logic/service-common')
+import baseApp from '@remedy-logic/service-common'
+import getApiRoutes from './api/apiRoutes.js'
+import express from 'express'
 
 ;( async () => {
-  const express = require('express')
-  const api = require('./api/api')
+  await baseApp.preStartInit()
+
   const apiRoot = express()
-  apiRoot.post('/api/processusersurvey', api.processUserSurvey)
+  apiRoot.use("/api", getApiRoutes())
 
   const settings = {
     appVersion,
