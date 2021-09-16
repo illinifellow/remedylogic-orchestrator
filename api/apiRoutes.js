@@ -6,7 +6,7 @@ const api = express.Router()
 
 function getApiRoutes() {
     const processUserSurveyApi = new PprocessUserSurveyApi()
-    api.post('processusersurvey', processUserSurveyApi.processUserSurvey)
+    api.post('/processusersurvey', processUserSurveyApi.processUserSurvey)
 
     return api
 }
