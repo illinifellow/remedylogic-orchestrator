@@ -8,6 +8,14 @@ import diagnosisService from '../services/diagnosisService.js'
 class ProcessUserSurveyApi {
   constructor() {
     this.processSurveyDataDo = new ProcessSurveyDataDo()
+    for (let obj = this; obj; obj = Object.getPrototypeOf(obj)) {
+      for (let name of Object.getOwnPropertyNames(obj)) {
+        if (typeof this[name] === 'function') {
+          this[name] = this[name].bind(this)
+        }
+      }
+    }
+
   }
   processSurveyDataDo
 
