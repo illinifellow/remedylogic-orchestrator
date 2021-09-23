@@ -1,8 +1,9 @@
 {
   "name": "remedylogic-back",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "backend to get wizard answers and uploaded files",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,12 +16,12 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/remedylogic/remedylogic-back#readme",
   "dependencies": {
-    "@remedy-logic/service-common": "^2.0.8",
+    "@remedy-logic/service-common": "^3.0.6",
     "cls-hooked": "^4.2.2",
     "express": "^4.17.1",
-    "mongodb": "^3.5.2",
-    "mongoose": "^5.8.11",
-    "mongoose-long": "^0.3.0",
+    "mongodb": "^4.1.1",
+    "mongoose": "^6.0.2",
+    "mongoose-long": "^0.4.1",
     "uuid": "^3.4.0"
   }
 }

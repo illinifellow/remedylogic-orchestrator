@@ -1,4 +1,4 @@
-const BaseService = require('@remedy-logic/service-common/services/BaseService')
+import BaseService from '@remedy-logic/service-common/services/BaseService.js'
 
 class AnalyzerService extends BaseService{
   constructor() {
@@ -10,4 +10,4 @@ class AnalyzerService extends BaseService{
   }
 }
 
-module.exports = new AnalyzerService()
+export default new AnalyzerService()

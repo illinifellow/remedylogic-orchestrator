@@ -1,4 +1,4 @@
-const BaseService = require('@remedy-logic/service-common/services/BaseService')
+import BaseService from '@remedy-logic/service-common/services/BaseService.js'
 
 class FilesProcessorService extends BaseService{
   constructor() {
@@ -10,4 +10,4 @@ class FilesProcessorService extends BaseService{
   }
 }
 
-module.exports = new FilesProcessorService()
+export default new FilesProcessorService()
