@@ -34,7 +34,7 @@ class ProcessUserSurveyApi {
       })
       filesProcessor.setDebugUrl('http://localhost:4003/v1/api/process')
       const fileProcessingResult = await filesProcessor.parseFiles(data.s3folder)
-      await this.processSurveyDataDo.update(_id, {
+      await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
         $push: {
           stagesLog: {
             stage: "filesprocessor",
@@ -42,7 +42,7 @@ class ProcessUserSurveyApi {
             data: fileProcessingResult
           }
         }
-      })
+      }, {new: true, upsert:true})
       if (fileProcessingResult.error) {
         console.error(`Error processing uploaded files for survey ${surveyId}`, fileProcessingResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorFilesprocessor", error: fileProcessingResult.error})
@@ -57,7 +57,7 @@ class ProcessUserSurveyApi {
 //-
       analyzerService.setDebugUrl('http://localhost:5000/v1/api/analyze')
       const imageAnalyzerResult = await analyzerService.analyze(fileProcessingResult.parsedS3folder, fileProcessingResult.data)
-      await this.processSurveyDataDo.update(_id, {
+      await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
         $push: {
           stagesLog: {
             stage: "analyzer",
@@ -76,7 +76,7 @@ class ProcessUserSurveyApi {
 //-
       diagnosisService.setDebugUrl('http://localhost:4004/v1/api/diagnosis')
       const diagnosisResult = await diagnosisService.diagnosis({imageAnalyzerResult, surveyData: data.surveyData})
-      await this.processSurveyDataDo.update(_id, {
+      await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
         $push: {
           stagesLog: {
             stage: "diagnosis",
@@ -84,7 +84,7 @@ class ProcessUserSurveyApi {
             data: diagnosisResult
           }
         }
-      })
+      },{new: true, upsert:true})
       if (diagnosisResult.error) {
         console.error(`Error diagnosing data for survey ${surveyId}`, diagnosisResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorDiagnosis", error: diagnosisResult.error})
