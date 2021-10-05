@@ -14,7 +14,8 @@ import express from 'express'
 
   const settings = {
     appVersion,
-    expressRoutes: apiRoot
+    expressRoutes: apiRoot,
+    trackHeaderUserId: true
   }
   baseApp(settings)
 })()
