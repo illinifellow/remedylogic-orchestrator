@@ -112,13 +112,14 @@ class ProcessUserSurveyApi {
   }
 
   async processUserSurvey(req, res) {
+    let imageAnalyzerResult
     try {
       const _id = uuidv1()
       const data = req.body
       const surveyId = data?.surveyData?.surveyId
 
       const fileProcessingResult = await this.processFiles(data)
-      const imageAnalyzerResult = await this.analyze(data, fileProcessingResult, _id)
+      imageAnalyzerResult = await this.analyze(data, fileProcessingResult, _id)
       const diagnosisResult = await this.diagnose(data, imageAnalyzerResult, _id)
 
       await this.processSurveyDataDo.update(_id, {surveyId, diagnosisResult,  imageAnalyzerResult, stage: "complete"})
@@ -128,7 +129,7 @@ class ProcessUserSurveyApi {
       if (e instanceof NonCriticalError) {
         console.warn(e)
         res.status(200)
-        res.send({error: e.message})
+        res.send({error: e.message, imageAnalyzerResult})
       } else {
         console.error(e)
         res.status(500)
