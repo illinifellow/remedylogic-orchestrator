@@ -4,6 +4,7 @@ import uuidv1 from 'uuid/v1.js'
 import analyzerService from '../services/analyzerService.js'
 import filesProcessor from '../services/filesProcessorService.js'
 import diagnosisService from '../services/diagnosisService.js'
+import NonCriticalError from "../helpers/NonCriticalError.js"
 
 class ProcessUserSurveyApi {
   constructor() {
@@ -15,16 +16,13 @@ class ProcessUserSurveyApi {
         }
       }
     }
-
   }
+
   processSurveyDataDo
 
-  async processUserSurvey(req, res) {
+  async processFiles(data, _id) {
     try {
-      const _id = uuidv1()
-      const data = req.body
       const surveyId = data?.surveyData?.surveyId
-//-
       await this.processSurveyDataDo.update(_id, {
         uploadedS3Folder: data.s3folder,
         surveyId: data.surveyData.surveyId,
@@ -42,19 +40,27 @@ class ProcessUserSurveyApi {
             data: fileProcessingResult
           }
         }
-      }, {new: true, upsert:true})
+      }, {new: true, upsert: true})
       if (fileProcessingResult.error) {
         console.error(`Error processing uploaded files for survey ${surveyId}`, fileProcessingResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorFilesprocessor", error: fileProcessingResult.error})
-        res.status(200)
-        return res.send(fileProcessingResult)
+        throw new NonCriticalError(`Error processing uploaded files for survey ${surveyId}`, fileProcessingResult.error)
       }
+      return fileProcessingResult
+    } catch (e) {
+      console.error("critical error in processFiles", e)
+      throw e
+    }
+  }
+
+  async analyze(data, fileProcessingResult, _id) {
+    try {
+      const surveyId = data?.surveyData?.surveyId
       await this.processSurveyDataDo.update(_id, {
         parsedS3folder: fileProcessingResult.parsedS3folder,
         parsedFilesData: fileProcessingResult.data,
         stage: "analyzer"
       })
-//-
       analyzerService.setDebugUrl('http://localhost:5000/v1/api/analyze')
       const imageAnalyzerResult = await analyzerService.analyze(fileProcessingResult.parsedS3folder, fileProcessingResult.data)
       await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
@@ -69,11 +75,19 @@ class ProcessUserSurveyApi {
       if (imageAnalyzerResult.error) {
         console.error(`Error analyzing data for survey ${surveyId}`, imageAnalyzerResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorAnalyzer", error: imageAnalyzerResult.error})
-        res.status(200)
-        return res.send(imageAnalyzerResult)
+        throw new NonCriticalError(`Error analyzing data for survey ${surveyId}`, imageAnalyzerResult.error)
       }
+      return imageAnalyzerResult
+    } catch (e) {
+      console.error("critical error in analyze", e)
+      throw e
+    }
+  }
+
+  async diagnose(data, imageAnalyzerResult, _id) {
+    try {
+      const surveyId = data?.surveyData?.surveyId
       await this.processSurveyDataDo.update(_id, {imageAnalyzerResult, stage: "diagnosis"})
-//-
       diagnosisService.setDebugUrl('http://localhost:4004/v1/api/diagnosis')
       const diagnosisResult = await diagnosisService.diagnosis({imageAnalyzerResult, surveyData: data.surveyData})
       await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
@@ -84,21 +98,46 @@ class ProcessUserSurveyApi {
             data: diagnosisResult
           }
         }
-      },{new: true, upsert:true})
+      }, {new: true, upsert: true})
       if (diagnosisResult.error) {
         console.error(`Error diagnosing data for survey ${surveyId}`, diagnosisResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorDiagnosis", error: diagnosisResult.error})
-        res.status(200)
-        return res.send(diagnosisResult)
+        throw new NonCriticalError(`Error diagnosing data for survey ${surveyId}`, diagnosisResult.error)
       }
-      await this.processSurveyDataDo.update(_id, {diagnosisResult, stage: "complete"})
+      return diagnosisResult
+    } catch (e) {
+      console.error("critical error in diagnose", e)
+      throw e
+    }
+  }
+
+  async processUserSurvey(req, res) {
+    let imageAnalyzerResult
+    try {
+      const _id = uuidv1()
+      const data = req.body
+      const surveyId = data?.surveyData?.surveyId
+
+      const fileProcessingResult = await this.processFiles(data)
+      imageAnalyzerResult = await this.analyze(data, fileProcessingResult, _id)
+      const diagnosisResult = await this.diagnose(data, imageAnalyzerResult, _id)
+
+      await this.processSurveyDataDo.update(_id, {surveyId, diagnosisResult,  imageAnalyzerResult, stage: "complete"})
 
       res.send({_id: data._id, data: {imageAnalyzerResult, diagnosisResult}})
     } catch (e) {
-      console.error('processUserSurvey error ', e)
-      res.status(500)
-      res.send(e)
+      if (e instanceof NonCriticalError) {
+        console.warn(e)
+        res.status(200)
+        res.send({error: e.message, imageAnalyzerResult})
+      } else {
+        console.error(e)
+        res.status(500)
+        res.send(e)
+      }
     }
   }
+
 }
+
 export default ProcessUserSurveyApi
