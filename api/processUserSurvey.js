@@ -4,7 +4,7 @@ import uuidv1 from 'uuid/v1.js'
 import analyzerService from '../services/analyzerService.js'
 import filesProcessor from '../services/filesProcessorService.js'
 import diagnosisService from '../services/diagnosisService.js'
-import NonCriticalError from "../helpers/NonCriticalError.js"
+import NonCriticalError from "@remedy-logic/service-common/helpers/NonCriticalError.js"
 
 class ProcessUserSurveyApi {
   constructor() {
@@ -44,7 +44,7 @@ class ProcessUserSurveyApi {
       if (fileProcessingResult.error) {
         console.error(`Error processing uploaded files for survey ${surveyId}`, fileProcessingResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorFilesprocessor", error: fileProcessingResult.error})
-        throw new NonCriticalError(`Error processing uploaded files for survey ${surveyId}`, fileProcessingResult.error)
+        throw new NonCriticalError(`Error processing uploaded files for survey ${surveyId} ${JSON.stringify(fileProcessingResult.error)}`)
       }
       return fileProcessingResult
     } catch (e) {
@@ -75,7 +75,7 @@ class ProcessUserSurveyApi {
       if (imageAnalyzerResult.error) {
         console.error(`Error analyzing data for survey ${surveyId}`, imageAnalyzerResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorAnalyzer", error: imageAnalyzerResult.error})
-        throw new NonCriticalError(`Error analyzing data for survey ${surveyId}`, imageAnalyzerResult.error)
+        throw new NonCriticalError(`Error analyzing data for survey ${surveyId} ${JSON.stringify(imageAnalyzerResult.error)}`)
       }
       return imageAnalyzerResult
     } catch (e) {
@@ -102,7 +102,7 @@ class ProcessUserSurveyApi {
       if (diagnosisResult.error) {
         console.error(`Error diagnosing data for survey ${surveyId}`, diagnosisResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorDiagnosis", error: diagnosisResult.error})
-        throw new NonCriticalError(`Error diagnosing data for survey ${surveyId}`, diagnosisResult.error)
+        throw new NonCriticalError(`Error diagnosing data for survey ${surveyId} ${JSON.stringify(diagnosisResult.error)}`)
       }
       return diagnosisResult
     } catch (e) {
@@ -128,8 +128,9 @@ class ProcessUserSurveyApi {
     } catch (e) {
       if (e instanceof NonCriticalError) {
         console.warn(e)
+        let errorMessage = e.message
         res.status(200)
-        res.send({error: e.message})
+        res.send({error: errorMessage})
       } else {
         console.error(e)
         res.status(500)
