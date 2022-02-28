@@ -128,8 +128,9 @@ class ProcessUserSurveyApi {
     } catch (e) {
       if (e instanceof NonCriticalError) {
         console.warn(e)
+        let errorMessage = e.message
         res.status(200)
-        res.send({error: e.message, errorData: e.errorData})
+        res.send({error: errorMessage})
       } else {
         console.error(e)
         res.status(500)
