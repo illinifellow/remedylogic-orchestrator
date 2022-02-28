@@ -4,7 +4,7 @@ import uuidv1 from 'uuid/v1.js'
 import analyzerService from '../services/analyzerService.js'
 import filesProcessor from '../services/filesProcessorService.js'
 import diagnosisService from '../services/diagnosisService.js'
-import NonCriticalError from "../helpers/NonCriticalError.js"
+import NonCriticalError from "@remedy-logic/service-common/helpers/NonCriticalError.js"
 
 class ProcessUserSurveyApi {
   constructor() {
@@ -129,7 +129,7 @@ class ProcessUserSurveyApi {
       if (e instanceof NonCriticalError) {
         console.warn(e)
         res.status(200)
-        res.send({error: e.message})
+        res.send({error: e.message, errorData: e.errorData})
       } else {
         console.error(e)
         res.status(500)
