@@ -44,7 +44,7 @@ class ProcessUserSurveyApi {
       if (fileProcessingResult.error) {
         console.error(`Error processing uploaded files for survey ${surveyId}`, fileProcessingResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorFilesprocessor", error: fileProcessingResult.error})
-        throw new NonCriticalError(`Error processing uploaded files for survey ${surveyId}`, fileProcessingResult.error)
+        throw new NonCriticalError(`Error processing uploaded files for survey ${surveyId} ${JSON.stringify(fileProcessingResult.error)}`)
       }
       return fileProcessingResult
     } catch (e) {
@@ -75,7 +75,7 @@ class ProcessUserSurveyApi {
       if (imageAnalyzerResult.error) {
         console.error(`Error analyzing data for survey ${surveyId}`, imageAnalyzerResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorAnalyzer", error: imageAnalyzerResult.error})
-        throw new NonCriticalError(`Error analyzing data for survey ${surveyId}`, imageAnalyzerResult.error)
+        throw new NonCriticalError(`Error analyzing data for survey ${surveyId} ${JSON.stringify(imageAnalyzerResult.error)}`)
       }
       return imageAnalyzerResult
     } catch (e) {
@@ -102,7 +102,7 @@ class ProcessUserSurveyApi {
       if (diagnosisResult.error) {
         console.error(`Error diagnosing data for survey ${surveyId}`, diagnosisResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorDiagnosis", error: diagnosisResult.error})
-        throw new NonCriticalError(`Error diagnosing data for survey ${surveyId}`, diagnosisResult.error)
+        throw new NonCriticalError(`Error diagnosing data for survey ${surveyId} ${JSON.stringify(diagnosisResult.error)}`)
       }
       return diagnosisResult
     } catch (e) {
