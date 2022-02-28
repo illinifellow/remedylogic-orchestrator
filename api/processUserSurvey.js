@@ -54,8 +54,8 @@ class ProcessUserSurveyApi {
   }
 
   async analyze(data, fileProcessingResult, _id) {
+    const surveyId = data?.surveyData?.surveyId
     try {
-      const surveyId = data?.surveyData?.surveyId
       await this.processSurveyDataDo.update(_id, {
         parsedS3folder: fileProcessingResult.parsedS3folder,
         parsedFilesData: fileProcessingResult.data,
@@ -124,16 +124,19 @@ class ProcessUserSurveyApi {
 
       await this.processSurveyDataDo.update(_id, {surveyId, diagnosisResult,  imageAnalyzerResult, stage: "complete"})
 
-      res.send({_id: data._id, data: {imageAnalyzerResult, diagnosisResult}})
+      res.send({_id: data._id, data: {fileProcessingResult, imageAnalyzerResult, diagnosisResult}})
     } catch (e) {
       if (e instanceof NonCriticalError) {
         console.warn(e)
         res.status(200)
-        res.send({error: e.message, imageAnalyzerResult})
+        res.send({error: e.message})
       } else {
         console.error(e)
         res.status(500)
-        res.send(e)
+        res.send({
+          error: e.message,
+          systemError: e
+        })
       }
     }
   }
