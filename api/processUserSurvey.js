@@ -22,6 +22,7 @@ class ProcessUserSurveyApi {
 
   async processFiles(data, _id) {
     try {
+      console.log(`processing files for survey ${_id}`)
       const surveyId = data?.surveyData?.surveyId
       await this.processSurveyDataDo.update(_id, {
         uploadedS3Folder: data.s3folder,
@@ -32,15 +33,15 @@ class ProcessUserSurveyApi {
       })
       filesProcessor.setDebugUrl('http://localhost:4003/v1/api/process')
       const fileProcessingResult = await filesProcessor.parseFiles(data.s3folder)
-      await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
-        $push: {
-          stagesLog: {
-            stage: "filesprocessor",
-            date: Date(),
-            data: fileProcessingResult
-          }
-        }
-      }, {new: true, upsert: true})
+      // await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
+      //   $push: {
+      //     stagesLog: {
+      //       stage: "filesprocessor",
+      //       date: Date(),
+      //       data: fileProcessingResult
+      //     }
+      //   }
+      // }, {new: true, upsert: true})
       if (fileProcessingResult.error) {
         console.error(`Error processing uploaded files for survey ${surveyId}`, fileProcessingResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorFilesprocessor", error: fileProcessingResult.error})
@@ -63,15 +64,15 @@ class ProcessUserSurveyApi {
       })
       analyzerService.setDebugUrl('http://localhost:5000/v1/api/analyze')
       const imageAnalyzerResult = await analyzerService.analyze(fileProcessingResult.parsedS3folder, fileProcessingResult.data)
-      await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
-        $push: {
-          stagesLog: {
-            stage: "analyzer",
-            date: Date(),
-            data: imageAnalyzerResult
-          }
-        }
-      })
+      // await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
+      //   $push: {
+      //     stagesLog: {
+      //       stage: "analyzer",
+      //       date: Date(),
+      //       data: imageAnalyzerResult
+      //     }
+      //   }
+      // })
       if (imageAnalyzerResult.error) {
         console.error(`Error analyzing data for survey ${surveyId}`, imageAnalyzerResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorAnalyzer", error: imageAnalyzerResult.error})
@@ -90,15 +91,15 @@ class ProcessUserSurveyApi {
       await this.processSurveyDataDo.update(_id, {imageAnalyzerResult, stage: "diagnosis"})
       diagnosisService.setDebugUrl('http://localhost:4004/v1/api/diagnosis')
       const diagnosisResult = await diagnosisService.diagnosis({imageAnalyzerResult, surveyData: data.surveyData})
-      await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
-        $push: {
-          stagesLog: {
-            stage: "diagnosis",
-            date: Date(),
-            data: diagnosisResult
-          }
-        }
-      }, {new: true, upsert: true})
+      // await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
+      //   $push: {
+      //     stagesLog: {
+      //       stage: "diagnosis",
+      //       date: Date(),
+      //       data: diagnosisResult
+      //     }
+      //   }
+      // }, {new: true, upsert: true})
       if (diagnosisResult.error) {
         console.error(`Error diagnosing data for survey ${surveyId}`, diagnosisResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorDiagnosis", error: diagnosisResult.error})
@@ -122,7 +123,7 @@ class ProcessUserSurveyApi {
       imageAnalyzerResult = await this.analyze(data, fileProcessingResult, _id)
       const diagnosisResult = await this.diagnose(data, imageAnalyzerResult, _id)
 
-      await this.processSurveyDataDo.update(_id, {surveyId, diagnosisResult,  imageAnalyzerResult, stage: "complete"})
+//      await this.processSurveyDataDo.update(_id, {surveyId, diagnosisResult,  imageAnalyzerResult, stage: "complete"})
 
       res.send({_id: data._id, data: {fileProcessingResult, imageAnalyzerResult, diagnosisResult}})
     } catch (e) {
@@ -130,7 +131,9 @@ class ProcessUserSurveyApi {
         console.warn(e)
         let errorMessage = e.message
         res.status(200)
-        res.send({error: errorMessage})
+        res.send({error: errorMessage,
+          imageAnalyzerResult // for Jack to be able to debug without resubmitting TODO remove, after logs are ready
+        })
       } else {
         console.error(e)
         res.status(500)
