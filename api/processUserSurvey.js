@@ -85,12 +85,12 @@ class ProcessUserSurveyApi {
     }
   }
 
-  async diagnose(data, imageAnalyzerResult, _id) {
+  async diagnose(data, imageAnalyzerResult, _id, noFiles) {
     try {
       const surveyId = data?.surveyData?.surveyId
       await this.processSurveyDataDo.update(_id, {imageAnalyzerResult, stage: "diagnosis"})
       diagnosisService.setDebugUrl('http://localhost:4004/v1/api/diagnosis')
-      const diagnosisResult = await diagnosisService.diagnosis({imageAnalyzerResult, surveyData: data.surveyData})
+      const diagnosisResult = await diagnosisService.diagnosis({imageAnalyzerResult, surveyData: data.surveyData, noFiles})
       // await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
       //   $push: {
       //     stagesLog: {
@@ -118,21 +118,22 @@ class ProcessUserSurveyApi {
       const _id = uuidv1()
       const data = req.body
       const surveyId = data?.surveyData?.surveyId
-
-      const fileProcessingResult = await this.processFiles(data)
-      imageAnalyzerResult = await this.analyze(data, fileProcessingResult, _id)
-      const diagnosisResult = await this.diagnose(data, imageAnalyzerResult, _id)
+      if (!data?.noFiles) {
+        const fileProcessingResult = await this.processFiles(data)
+        imageAnalyzerResult = await this.analyze(data, fileProcessingResult, _id)
+      }
+      const diagnosisResult = await this.diagnose(data, imageAnalyzerResult, _id, data?.noFiles)
 
 //      await this.processSurveyDataDo.update(_id, {surveyId, diagnosisResult,  imageAnalyzerResult, stage: "complete"})
 
-      res.send({_id: data._id, data: {fileProcessingResult, imageAnalyzerResult, diagnosisResult}})
+      res.send({_id: data._id, data: {fileProcessingResult, imageAnalyzerResult, diagnosisResult, noFiles:!data?.noFiles}})
     } catch (e) {
       if (e instanceof NonCriticalError) {
         console.warn(e)
         let errorMessage = e.message
         res.status(200)
         res.send({error: errorMessage,
-          imageAnalyzerResult // for Jack to be able to debug without resubmitting TODO remove, after logs are ready
+          imageAnalyzerResult // for Jack to be able to debug without resubmitting TODO remove or not, after the logs are ready
         })
       } else {
         console.error(e)
