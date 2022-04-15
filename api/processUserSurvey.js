@@ -32,15 +32,15 @@ class ProcessUserSurveyApi {
       })
       filesProcessor.setDebugUrl('http://localhost:4003/v1/api/process')
       const fileProcessingResult = await filesProcessor.parseFiles(data.s3folder)
-      await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
-        $push: {
-          stagesLog: {
-            stage: "filesprocessor",
-            date: Date(),
-            data: fileProcessingResult
-          }
-        }
-      }, {new: true, upsert: true})
+      // await this.processSurveyDataDo.do.findOneAndUpdate({_id}, {
+      //   $push: {
+      //     stagesLog: {
+      //       stage: "filesprocessor",
+      //       date: Date(),
+      //       data: fileProcessingResult
+      //     }
+      //   }
+      // }, {new: true, upsert: true})
       if (fileProcessingResult.error) {
         console.error(`Error processing uploaded files for survey ${surveyId}`, fileProcessingResult.error)
         await this.processSurveyDataDo.update(_id, {stage: "errorFilesprocessor", error: fileProcessingResult.error})
