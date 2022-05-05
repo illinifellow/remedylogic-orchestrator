@@ -16,8 +16,9 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/remedylogic/remedylogic-back#readme",
   "dependencies": {
-    "@remedy-logic/service-common": "^3.0.24",
+    "@remedy-logic/service-common": "^5.0.3",
     "cls-hooked": "^4.2.2",
+    "dotenv": "^16.0.0",
     "express": "^4.17.1",
     "mongodb": "^4.1.1",
     "mongoose": "^6.0.2",
