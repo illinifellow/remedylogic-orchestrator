@@ -21,7 +21,7 @@ build_dev:
     --cache=true
     --cache-copy-layers
   rules:
-  - if: $CI_COMMIT_BRANCH == "dev-k8s"
+  - if: $CI_COMMIT_BRANCH == "dev-k8s" || ($CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev-k8s")
   tags:
   - k8s
   - dev
