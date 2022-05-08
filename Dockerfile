@@ -1,6 +1,6 @@
 FROM node:14.4.0-alpine
 
-RUN apk update && apk add --no-cache openssh bash curl
+RUN apk update
 
 COPY . /app
 WORKDIR app
