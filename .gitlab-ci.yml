@@ -51,3 +51,28 @@ build_uat:
   tags:
   - k8s
   - dev
+
+build_prod:
+  stage: build-push
+  image:
+    name: gcr.io/kaniko-project/executor:v1.7.0-debug
+    entrypoint: [""]
+  script:
+  - echo "//${CI_SERVER_HOST}/api/v4/projects/19/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+  - mkdir -p /kaniko/.docker
+  - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+  - >-
+    /kaniko/executor
+    --context "${CI_PROJECT_DIR}"
+    --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+    --destination "${CI_REGISTRY_IMAGE}:${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}-${CI_COMMIT_SHORT_SHA}-$(date +%s)"
+    --compressed-caching=false
+    --cache=true
+    --cache-copy-layers
+  rules:
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "prod-k8s"
+    when: manual
+    allow_failure: false
+  tags:
+  - k8s
+  - prod
